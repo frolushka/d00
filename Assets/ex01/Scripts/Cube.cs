@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float minSpeed;
+    [SerializeField] private float maxSpeed;
+
+    private float _speed;
+    
+    private void Start()
     {
-        
+        _speed = Random.Range(minSpeed, maxSpeed);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        transform.Translate(_speed * Time.deltaTime * Vector3.down);
     }
 }

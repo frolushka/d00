@@ -1,18 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private KeyCode key;
+    [SerializeField] private float minSpawnDelay;
+    [SerializeField] private float maxSpawnDelay;
+
+    [Space] 
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private Transform targetPoint;
+    [SerializeField] private GameObject prefab;
+
+    private GameObject _currentCube;
+    private GameObject CurrentCube
     {
-        
+        get => _currentCube;
+        set
+        {
+            if (_currentCube)
+            {
+                Destroy(_currentCube);
+            }
+            _currentCube = value;
+        }
+    }
+    private float _nextSpawn;
+    
+    private void Start()
+    {
+        _nextSpawn = Random.Range(minSpawnDelay, maxSpawnDelay);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Time.time >= _nextSpawn)
+        {
+            CurrentCube = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+            _nextSpawn = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
+        }
+
+        if (Input.GetKeyDown(key) && _currentCube)
+        {
+            Debug.Log($"Precision: {Vector3.Distance(targetPoint.position, _currentCube.transform.position)}");
+            CurrentCube = null;
+        }
     }
 }

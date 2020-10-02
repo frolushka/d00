@@ -3,8 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bird : MonoBehaviour
+public class Bird : MonoBehaviour, ICollisionHandler
 {
+    public static bool GameOver = false;
+    
+    [HideInInspector]
+    public float points;
+    
     [SerializeField] private float gravity;
     [SerializeField] private float punchPower;
 
@@ -12,6 +17,9 @@ public class Bird : MonoBehaviour
 
     private void Update()
     {
+        if (GameOver)
+            return;
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _currentVerticalVelocity = punchPower;
@@ -21,8 +29,13 @@ public class Bird : MonoBehaviour
         _currentVerticalVelocity -= Time.deltaTime * gravity;
     }
 
-    private void OnBecameInvisible()
+    public void OnCollision(Physics2D_42.CollisionData collisionData)
     {
-        Debug.Log($"Score: TODO\nTime: {Mathf.RoundToInt(Time.time)}s");
+        if (GameOver)
+            return;
+
+        GameOver = true;
+        Physics2D_42.Instance.Active = false;
+        Debug.Log($"Score: {Mathf.RoundToInt(points)}\nTime: {Mathf.RoundToInt(Time.time)}s");
     }
 }
