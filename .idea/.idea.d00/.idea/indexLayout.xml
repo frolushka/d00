@@ -18,7 +18,7 @@
       <Path>Library</Path>
       <Path>Logs</Path>
       <Path>Temp</Path>
-      <Path>build-for-github-pages</Path>
+      <Path>docs</Path>
       <Path>obj</Path>
     </explicitExcludes>
   </component>

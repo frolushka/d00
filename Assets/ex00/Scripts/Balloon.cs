@@ -36,11 +36,11 @@ public class Balloon : MonoBehaviour
             _breath = value > 0 ? value : 0;
             if (_breath == 0)
             {
-                _nextTimeAvaliableInflate = Time.time + breathDelay;
+                _nextTimeAvaliableInflate = Time.timeSinceLevelLoad + breathDelay;
             }
         }
     }
-    public bool InflateAvailable => Time.time >= _nextTimeAvaliableInflate;
+    public bool InflateAvailable => Time.timeSinceLevelLoad >= _nextTimeAvaliableInflate;
     
     private void Start()
     {
@@ -64,7 +64,7 @@ public class Balloon : MonoBehaviour
 
     private void CancelGame()
     {
-        Debug.Log($"Balloon lifetime: {Mathf.RoundToInt(Time.time)}s");
+        Debug.Log($"Balloon lifetime: {Mathf.RoundToInt(Time.timeSinceLevelLoad)}s");
         Destroy(gameObject);
     }
 }

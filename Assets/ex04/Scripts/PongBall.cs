@@ -8,6 +8,8 @@ public class PongBall : MonoBehaviour, ICollisionHandler
     [SerializeField] private Transform playerLeft;
     [SerializeField] private Transform playerRight;
     [SerializeField] private Transform spawnPoint;
+    [Header("Physics")] 
+    [SerializeField] private PhysicsObject2D_42 physics;
 
     private int _playerLeftScore;
     private int _playerRightScore;
@@ -22,7 +24,7 @@ public class PongBall : MonoBehaviour, ICollisionHandler
 
     private void Update()
     {
-        transform.Translate(speed * Time.deltaTime * _currentVelocity);
+        physics.Move(speed * Time.deltaTime * _currentVelocity);
         if (transform.position.x <= playerLeft.position.x - Offset)
         {
             AddPointAndRestart(ref _playerRightScore);
@@ -43,7 +45,7 @@ public class PongBall : MonoBehaviour, ICollisionHandler
 
     private void UpdateCurrentVelocity()
     {
-        _currentVelocity = new Vector2(Sign(Random.Range(-1, 1)), Sign(Random.Range(-1, 1)));
+        _currentVelocity = new Vector2(Sign(Random.Range(-1, 2)), Sign(Random.Range(-1, 2)));
         int Sign(int a) => a > 0 ? 1 : -1;
     }
     

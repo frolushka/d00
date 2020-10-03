@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
@@ -15,5 +17,10 @@ public class Cube : MonoBehaviour
     private void Update()
     {
         transform.Translate(_speed * Time.deltaTime * Vector3.down);
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

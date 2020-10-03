@@ -9,8 +9,10 @@ public class Ball : MonoBehaviour, ICollisionHandler
     [SerializeField] private Club club;
     [Header("Hole collision")]
     [SerializeField] private float maxVelocityToWin;
-    [SerializeField] private BoxCollider2D_42 ball;
-    [SerializeField] private BoxCollider2D_42 hole;
+    [SerializeField] private PhysicsObject2D_42 ball;
+    [SerializeField] private PhysicsObject2D_42 hole;
+    [Header("Physics")] 
+    [SerializeField] private PhysicsObject2D_42 physics;
 
     private int _score = -15;
     private bool _isMoving;
@@ -21,14 +23,14 @@ public class Ball : MonoBehaviour, ICollisionHandler
     {
         if (_isMoving)
         {
-            transform.Translate(Time.deltaTime * _currentVelocity);
+            physics.Move(Time.deltaTime * _currentVelocity);
             _currentVelocity -= 1f / deccelerationTime * Time.deltaTime * _startVelocity;
             if (_currentVelocity.sqrMagnitude < 0.05f)
             {
                 _currentVelocity = Vector2.zero;
                 _isMoving = false;
                 _score += Reward;
-                PrintScore();
+                Debug.Log($"Score: {_score}");
                 club.Show(true);
             }
         }
@@ -42,13 +44,8 @@ public class Ball : MonoBehaviour, ICollisionHandler
         {
             _isMoving = false;
             ballSpriteRenderer.enabled = false;
-            PrintScore();
+            Debug.Log($"Final score: {_score}");
         }
-    }
-
-    private void PrintScore()
-    {
-        Debug.Log($"Final score: {_score}");
     }
 
     public void Punch(Vector2 force)

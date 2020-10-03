@@ -33,10 +33,10 @@ public class CubeSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time >= _nextSpawn)
+        if (Time.timeSinceLevelLoad >= _nextSpawn)
         {
             CurrentCube = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-            _nextSpawn = Time.time + Random.Range(minSpawnDelay, maxSpawnDelay);
+            _nextSpawn = Time.timeSinceLevelLoad + Random.Range(minSpawnDelay, maxSpawnDelay);
         }
 
         if (Input.GetKeyDown(key) && _currentCube)

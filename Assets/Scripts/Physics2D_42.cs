@@ -16,25 +16,26 @@ public class Physics2D_42 : MonoBehaviour
     }
     
     private const float Threeshold = 0.001f;
-    
     public static Physics2D_42 Instance { get; private set; }
+    public bool IsDirty { get; set; }
     
-    [SerializeField] private BoxCollider2D_42[] colliders;
+    [SerializeField] private PhysicsObject2D_42[] colliders;
 
-    public bool Active { get; set; } = true;
-    
+    public bool active = true;
+
     private void Awake()
     {
         if (colliders == null || colliders.Length == 0)
-            enabled = false;
+            active = false;
         Instance = this;
     }
 
     private void FixedUpdate()
     {
-        if (Active)
+        if (active && IsDirty)
         {
             Simulate();
+            IsDirty = false;
         }
     }
 
@@ -63,7 +64,7 @@ public class Physics2D_42 : MonoBehaviour
         }
     }
 
-    public static bool TryIntersectBoxColliders(BoxCollider2D_42 first, BoxCollider2D_42 second, out Vector2 normal)
+    public static bool TryIntersectBoxColliders(PhysicsObject2D_42 first, PhysicsObject2D_42 second, out Vector2 normal)
     {
         var fp = first.transform.position;
         var sp = second.transform.position;

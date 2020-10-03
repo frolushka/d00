@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Bird : MonoBehaviour, ICollisionHandler
 {
-    public static bool GameOver = false;
+    public bool GameOver { get; private set; }
     
     [HideInInspector]
     public float points;
     
     [SerializeField] private float gravity;
     [SerializeField] private float punchPower;
+    [Header("Physics")] 
+    [SerializeField] private PhysicsObject2D_42 physics;
 
     private float _currentVerticalVelocity;
 
@@ -25,7 +27,7 @@ public class Bird : MonoBehaviour, ICollisionHandler
             _currentVerticalVelocity = punchPower;
         }
 
-        transform.position += Time.deltaTime * _currentVerticalVelocity * Vector3.up;
+        physics.Move(Time.deltaTime * _currentVerticalVelocity * Vector3.up);
         _currentVerticalVelocity -= Time.deltaTime * gravity;
     }
 
@@ -35,7 +37,7 @@ public class Bird : MonoBehaviour, ICollisionHandler
             return;
 
         GameOver = true;
-        Physics2D_42.Instance.Active = false;
-        Debug.Log($"Score: {Mathf.RoundToInt(points)}\nTime: {Mathf.RoundToInt(Time.time)}s");
+        Physics2D_42.Instance.active = false;
+        Debug.Log($"Score: {Mathf.RoundToInt(points)}\nTime: {Mathf.RoundToInt(Time.timeSinceLevelLoad)}s");
     }
 }

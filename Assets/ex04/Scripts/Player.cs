@@ -10,15 +10,18 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float speed;
     
+    [Header("Physics")] 
+    [SerializeField] private PhysicsObject2D_42 physics;
+    
     private void Update()
     {
         if (Input.GetKey(keyUp))
         {
-            transform.Translate(Time.deltaTime * speed * Vector3.up);
+            physics.Move(Time.deltaTime * speed * Vector3.up);
         }
         else if (Input.GetKey(keyDown))
         {
-            transform.Translate(Time.deltaTime * speed * Vector3.down);
+            physics.Move(Time.deltaTime * speed * Vector3.down);
         }
     }
 }

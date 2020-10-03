@@ -169,6 +169,7 @@ MonoBehaviour:
   - {fileID: 116176729}
   - {fileID: 1409095479}
   - {fileID: 526705631}
+  active: 1
 --- !u!4 &125630074
 Transform:
   m_ObjectHideFlags: 0
@@ -377,6 +378,7 @@ MonoBehaviour:
   points: 0
   gravity: 15
   punchPower: 5
+  physics: {fileID: 445587820}
 --- !u!114 &526705631 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1518683912788334651, guid: 16656958d7da444ab87ffca37a87434c,
@@ -1065,6 +1067,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518683912550486678, guid: 16656958d7da444ab87ffca37a87434c,
+        type: 3}
+      propertyPath: isStatic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518683912788334651, guid: 16656958d7da444ab87ffca37a87434c,
+        type: 3}
+      propertyPath: isStatic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16656958d7da444ab87ffca37a87434c, type: 3}

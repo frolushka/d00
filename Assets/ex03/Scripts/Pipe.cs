@@ -25,7 +25,7 @@ public class Pipe : MonoBehaviour
 
     private void Update()
     {
-        if (Bird.GameOver)
+        if (player.GameOver)
             return;
         
         if (!_passed && player.transform.position.x > transform.position.x)

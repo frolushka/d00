@@ -11,26 +11,25 @@ public class SimpleSceneSwitcher : MonoBehaviour
     
     private void Awake()
     {
-        SceneManager.LoadScene(scenes[_currentSceneIndex], LoadSceneMode.Additive);
+        DontDestroyOnLoad(gameObject);
+        SceneManager.LoadScene(scenes[_currentSceneIndex]);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            SceneManager.UnloadScene(scenes[_currentSceneIndex]);
             _currentSceneIndex--;
             if (_currentSceneIndex < 0)
                 _currentSceneIndex = scenes.Count - 1;
-            SceneManager.LoadScene(scenes[_currentSceneIndex], LoadSceneMode.Additive);
+            SceneManager.LoadScene(scenes[_currentSceneIndex]);
         }
         else if (Input.GetKeyDown(KeyCode.P))
         {
-            SceneManager.UnloadScene(scenes[_currentSceneIndex]);
             _currentSceneIndex++;
             if (_currentSceneIndex >= scenes.Count)
                 _currentSceneIndex = 0;
-            SceneManager.LoadScene(scenes[_currentSceneIndex], LoadSceneMode.Additive);
+            SceneManager.LoadScene(scenes[_currentSceneIndex]);
         }
     }
 }

@@ -1059,6 +1059,8 @@ MonoBehaviour:
   - {fileID: 1558884860}
   - {fileID: 163867765}
   - {fileID: 1828801559}
+  active: 1
+  debug: 1
 --- !u!4 &1070186391
 Transform:
   m_ObjectHideFlags: 0
@@ -1921,6 +1923,7 @@ MonoBehaviour:
   maxVelocityToWin: 1
   ball: {fileID: 1828801559}
   hole: {fileID: 1534660276}
+  physics: {fileID: 1828801559}
 --- !u!1 &1946514895
 GameObject:
   m_ObjectHideFlags: 0

@@ -216,7 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b80c9d8d4b5c489ba01b28adab7e60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStatic: 1
+  isStatic: 0
+  isTrigger: 0
   size: {x: 0.5, y: 2}
 --- !u!114 &267167888
 MonoBehaviour:
@@ -233,6 +234,7 @@ MonoBehaviour:
   keyUp: 119
   keyDown: 115
   speed: 3
+  physics: {fileID: 267167887}
 --- !u!1 &719306561
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 1
+  isTrigger: 0
   size: {x: 15, y: 0.5}
 --- !u!212 &719306564
 SpriteRenderer:
@@ -364,6 +367,7 @@ MonoBehaviour:
   - {fileID: 719306563}
   - {fileID: 267167887}
   - {fileID: 1618753946}
+  active: 1
 --- !u!4 &765858783
 Transform:
   m_ObjectHideFlags: 0
@@ -474,6 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 0
+  isTrigger: 0
   size: {x: 0.5, y: 0.5}
 --- !u!114 &843858122
 MonoBehaviour:
@@ -491,6 +496,7 @@ MonoBehaviour:
   playerLeft: {fileID: 267167886}
   playerRight: {fileID: 1618753948}
   spawnPoint: {fileID: 1714129412}
+  physics: {fileID: 843858121}
 --- !u!1 &867520838
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStatic: 1
+  isTrigger: 0
   size: {x: 15, y: 0.5}
 --- !u!212 &1107279738
 SpriteRenderer:
@@ -796,6 +803,7 @@ MonoBehaviour:
   keyUp: 273
   keyDown: 274
   speed: 3
+  physics: {fileID: 1618753946}
 --- !u!114 &1618753946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,7 +816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b80c9d8d4b5c489ba01b28adab7e60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStatic: 1
+  isStatic: 0
+  isTrigger: 0
   size: {x: 0.5, y: 2}
 --- !u!212 &1618753947
 SpriteRenderer:
