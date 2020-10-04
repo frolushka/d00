@@ -305,7 +305,7 @@ MonoBehaviour:
   defaultBreath: 5
   breathDecreaseValue: 0.5
   breathIncreaseSpeed: 1.5
-  inflateValue: 0.3
+  inflateValue: 0.5
   breathDelay: 3
 --- !u!1 &1694503216
 GameObject:

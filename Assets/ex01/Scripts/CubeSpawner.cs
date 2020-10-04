@@ -41,7 +41,7 @@ public class CubeSpawner : MonoBehaviour
 
         if (Input.GetKeyDown(key) && _currentCube)
         {
-            Debug.Log($"Precision: {Vector3.Distance(targetPoint.position, _currentCube.transform.position)}");
+            Debug.Log($"Precision: {(targetPoint.position - _currentCube.transform.position).magnitude:f3}");
             CurrentCube = null;
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Physics2D_42 : MonoBehaviour
 {
@@ -50,20 +49,14 @@ public class Physics2D_42 : MonoBehaviour
                 
                 if (TryIntersectBoxColliders(colliders[i], colliders[j], out var normal))
                 {
-                    ICollisionHandler collisionHandler;
-                    if (colliders[i].TryGetComponent<ICollisionHandler>(out collisionHandler))
-                    {
-                        collisionHandler.OnCollision(new CollisionData(-normal, colliders[j].gameObject));
-                    }
-                    if (colliders[j].TryGetComponent<ICollisionHandler>(out collisionHandler))
-                    {
-                        collisionHandler.OnCollision(new CollisionData(normal, colliders[i].gameObject));
-                    }
+                    colliders[i].OnCollision(new CollisionData(-normal, colliders[j].gameObject));
+                    colliders[j].OnCollision(new CollisionData(normal, colliders[i].gameObject));
                 }
             }    
         }
     }
 
+    private delegate void CollisionDelegate(out Vector2 normal);
     public static bool TryIntersectBoxColliders(PhysicsObject2D_42 first, PhysicsObject2D_42 second, out Vector2 normal)
     {
         var fp = first.transform.position;
@@ -79,66 +72,93 @@ public class Physics2D_42 : MonoBehaviour
         {
             if (first.isTrigger || second.isTrigger)
                 return true;
-            
-            if (a.x > c.x && a.x <= d.x && b.x > d.x)
+
+            var min = float.MaxValue;
+            CollisionDelegate cd = null;
+            if (a.x > c.x && a.x <= d.x && b.x > d.x && d.x - a.x < min)
             {
-                if (!first.isStatic)
-                {
-                    fp.x = sp.x + (first.size.x + second.size.x) / 2 + Threeshold;
-                    first.transform.position = fp;
-                }
-                else if (!second.isStatic)
-                {
-                    sp.x = fp.x - (first.size.x + second.size.x) / 2 - Threeshold;
-                    second.transform.position = sp;
-                }
-                normal = Vector2.right;
+                min = d.x - a.x;
+                cd = OnRightCollision;
             }
-            else if (c.x > a.x && c.x <= b.x && d.x > b.x)
+            if (c.x > a.x && c.x <= b.x && d.x > b.x && b.x - c.x < min)
             {
-                if (!first.isStatic)
-                {
-                    fp.x = sp.x - (first.size.x + second.size.x) / 2 - Threeshold;
-                    first.transform.position = fp;
-                }
-                else if (!second.isStatic)
-                {
-                    sp.x = fp.x + (first.size.x + second.size.x) / 2 + Threeshold;
-                    second.transform.position = sp;
-                }
-                normal = Vector2.left;
+                min = b.x - c.x;
+                cd = OnLeftCollision;
             }
-            else if (a.y > c.y && a.y <= d.y && b.y > d.y)
+            if (a.y > c.y && a.y <= d.y && b.y > d.y && d.y - a.y < min)
             {
-                if (!first.isStatic)
-                {
-                    fp.y = sp.y + (first.size.y + second.size.y) / 2 + Threeshold;
-                    first.transform.position = fp;
-                }
-                else if (!second.isStatic)
-                {
-                    sp.y = fp.y - (first.size.y + second.size.y) / 2 - Threeshold;
-                    second.transform.position = sp;
-                }
-                normal = Vector2.up;
+                min = d.y - a.y;
+                cd = OnTopCollision;
             }
-            else if (c.y > a.y && c.y <= b.y && d.y > b.y)
+            if (c.y > a.y && c.y <= b.y && d.y > b.y && b.y - c.y < min)
             {
-                if (!first.isStatic)
-                {
-                    fp.y = sp.y - (first.size.y + second.size.y) / 2 - Threeshold;
-                    first.transform.position = fp;
-                }
-                else if (!second.isStatic)
-                {
-                    sp.y = fp.y + (first.size.y + second.size.y) / 2 + Threeshold;
-                    second.transform.position = sp;
-                }
-                normal = Vector2.down;
+                min = b.y - c.y;
+                cd = OnBotCollision;
             }
+            cd?.Invoke(out normal);
             return true;
         }
 
         return false;
+
+        void OnRightCollision(out Vector2 n)
+        {
+            if (!first.isStatic)
+            {
+                fp.x = sp.x + (first.size.x + second.size.x) / 2 + Threeshold;
+                first.transform.position = fp;
+            }
+            else if (!second.isStatic)
+            {
+                sp.x = fp.x - (first.size.x + second.size.x) / 2 - Threeshold;
+                second.transform.position = sp;
+            }
+            n = Vector2.right;
+        }
+
+        void OnLeftCollision(out Vector2 n)
+        {
+            if (!first.isStatic)
+            {
+                fp.x = sp.x - (first.size.x + second.size.x) / 2 - Threeshold;
+                first.transform.position = fp;
+            }
+            else if (!second.isStatic)
+            {
+                sp.x = fp.x + (first.size.x + second.size.x) / 2 + Threeshold;
+                second.transform.position = sp;
+            }
+            n = Vector2.left;
+        }
+
+        void OnTopCollision(out Vector2 n)
+        {
+            if (!first.isStatic)
+            {
+                fp.y = sp.y + (first.size.y + second.size.y) / 2 + Threeshold;
+                first.transform.position = fp;
+            }
+            else if (!second.isStatic)
+            {
+                sp.y = fp.y - (first.size.y + second.size.y) / 2 - Threeshold;
+                second.transform.position = sp;
+            }
+            n = Vector2.up;   
+        }
+
+        void OnBotCollision(out Vector2 n)
+        {
+            if (!first.isStatic)
+            {
+                fp.y = sp.y - (first.size.y + second.size.y) / 2 - Threeshold;
+                first.transform.position = fp;
+            }
+            else if (!second.isStatic)
+            {
+                sp.y = fp.y + (first.size.y + second.size.y) / 2 + Threeshold;
+                second.transform.position = sp;
+            }
+            n = Vector2.down;
+        }
     }
 }

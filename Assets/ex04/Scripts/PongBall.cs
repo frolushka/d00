@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PongBall : MonoBehaviour, ICollisionHandler
+public class PongBall : MonoBehaviour
 {
     private const float Offset = 0.5f;
 
@@ -8,6 +8,7 @@ public class PongBall : MonoBehaviour, ICollisionHandler
     [SerializeField] private Transform playerLeft;
     [SerializeField] private Transform playerRight;
     [SerializeField] private Transform spawnPoint;
+    
     [Header("Physics")] 
     [SerializeField] private PhysicsObject2D_42 physics;
 
@@ -15,6 +16,11 @@ public class PongBall : MonoBehaviour, ICollisionHandler
     private int _playerRightScore;
 
     private Vector2 _currentVelocity;
+
+    private void Awake()
+    {
+        physics.onCollision += OnCollision;
+    }
 
     private void Start()
     {
@@ -49,7 +55,7 @@ public class PongBall : MonoBehaviour, ICollisionHandler
         int Sign(int a) => a > 0 ? 1 : -1;
     }
     
-    public void OnCollision(Physics2D_42.CollisionData collisionData)
+    private void OnCollision(Physics2D_42.CollisionData collisionData)
     {
         if (Abs(collisionData.normal.x) > Abs(collisionData.normal.y))
         {

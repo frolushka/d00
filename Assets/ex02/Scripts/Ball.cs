@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Ball : MonoBehaviour, ICollisionHandler
+public class Ball : MonoBehaviour
 {
     private const int Reward = 5;
     
@@ -18,7 +18,12 @@ public class Ball : MonoBehaviour, ICollisionHandler
     private bool _isMoving;
     private Vector2 _startVelocity;
     private Vector2 _currentVelocity;
-    
+
+    private void Awake()
+    {
+        physics.onCollision += OnCollision;
+    }
+
     private void Update()
     {
         if (_isMoving)
@@ -55,7 +60,7 @@ public class Ball : MonoBehaviour, ICollisionHandler
         _isMoving = true;
     }
     
-    public void OnCollision(Physics2D_42.CollisionData collisionData)
+    private void OnCollision(Physics2D_42.CollisionData collisionData)
     {
         if (Abs(collisionData.normal.x) > Abs(collisionData.normal.y))
         {

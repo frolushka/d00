@@ -1,9 +1,10 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 public class PhysicsObject2D_42 : MonoBehaviour
 {
+    public delegate void CollisionHandler(Physics2D_42.CollisionData data);
+    public event CollisionHandler onCollision;
+        
     public bool isStatic;
     public bool isTrigger;
     public Vector2 size;
@@ -29,5 +30,10 @@ public class PhysicsObject2D_42 : MonoBehaviour
     {
         _transform.Translate(translation);
         Physics2D_42.Instance.IsDirty = true;
+    }
+
+    public void OnCollision(Physics2D_42.CollisionData data)
+    {
+        onCollision?.Invoke(data);
     }
 }
